@@ -346,15 +346,7 @@ function renderPlan(){
   if(type==='repos') html+=`<div class="day-note">Repos complet. Marche libre + étirements. Dors 8h.</div>`;
   html+=`</div>`;
 
-  if(isMuscu||isCardio){
-    const l1 = isCardio?'🏃 SÉANCE':'🏋️ ENTRAÎNEMENT';
-    html+=`<div class="tabs">
-      <button class="tab-btn" onclick="setTab('training')" style="background:${currentTab==='training'?accent:'#1e293b'};color:${currentTab==='training'?'#0a0a0f':'#64748b'}">${l1}</button>
-      <button class="tab-btn" onclick="setTab('nutrition')" style="background:${currentTab==='nutrition'?accent:'#1e293b'};color:${currentTab==='nutrition'?'#0a0a0f':'#64748b'}">🍽️ NUTRITION</button>
-    </div>`;
-  }
-
-  if(currentTab==='training'&&isMuscu){
+  if(isMuscu){
     const tr=TRAINING[currentDay];
     html+=`<div style="background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:10px 14px;margin-bottom:14px"><span style="font-size:13px;font-weight:800;color:${accent}">${tr.title}</span></div>`;
     tr.sections.forEach(sec=>{
@@ -379,19 +371,10 @@ function renderPlan(){
     });
     html+=`<button class="save-workout-btn" id="save-workout-btn" onclick="saveWorkLog()">💾 Sauvegarder la séance</button>`;
   }
-  if(currentTab==='training'&&isCardio){
+  if(isCardio){
     html+=`<div class="cardio-card">`;
     CARDIO[currentDay].steps.forEach(s=>{ html+=`<div class="cardio-step"><div class="cardio-icon">${s.icon}</div><div><div class="cardio-title">${s.title}</div><div class="cardio-desc">${s.desc}</div></div></div>`; });
     html+=`</div>`;
-  }
-  if(currentTab==='nutrition'||type==='repos'){
-    html+=`<div class="meals-card">`;
-    nut.meals.forEach(m=>{ html+=`<div class="meal-row"><div class="meal-icon">${m.icon}</div><div class="meal-content">
-      <div class="meal-top"><span class="meal-name">${m.name}</span><span class="meal-time">${m.time}</span></div>
-      ${m.items.map(it=>`<div class="meal-item">• ${it}</div>`).join('')}
-      <span class="meal-macros">${m.macros}</span></div></div>`; });
-    html+=`</div><div class="total-bar"><span class="total-label">TOTAL DU JOUR</span><span class="total-value">${nut.total}</span></div>`;
-    html+=`<div class="tip-box"><div class="tip-label">💡 CONSEIL DU JOUR</div><div class="tip-text">${nut.tip}</div></div>`;
   }
   document.getElementById('plan-content').innerHTML=html;
 }
