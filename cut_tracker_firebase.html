@@ -126,6 +126,14 @@
   .config-warn p { font-size: 11px; color: #94a3b8; line-height: 1.6; }
   .config-warn code { background: #0a0a14; padding: 2px 6px; border-radius: 4px; color: #6ee7b7; font-size: 10px; }
   .leave-link { text-align: center; font-size: 10px; color: #475569; margin-top: 4px; cursor: pointer; }
+  .ex-suggested { font-size: 9px; color: #22c55e; margin: 3px 0 5px 28px; font-weight: 600; }
+  .ex-log { margin: 5px 0 0 28px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .ex-log-label { font-size: 10px; color: #64748b; }
+  .ex-log input { padding: 5px 8px; border-radius: 6px; border: 1px solid #1e293b; background: #0a0a14; color: #f1f5f9; font-size: 11px; }
+  .ex-log input[type="number"] { width: 65px; }
+  .ex-log input[type="text"] { width: 90px; }
+  .save-workout-btn { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #f59e0b18; border: 1px solid #f59e0b40; color: #f59e0b; font-weight: 800; font-size: 12px; cursor: pointer; margin: 4px 0 14px; transition: all .2s; }
+  .save-workout-btn:active { transform: scale(0.98); }
 </style>
 </head>
 <body>
@@ -194,41 +202,41 @@ const DAY_CAL = {lundi:1550,mardi:1700,mercredi:1700,jeudi:1550,vendredi:1700,sa
 const TRAINING = {
   mardi:{title:'PECS / BICEPS',sections:[
     {name:'PECS',color:'#f97316',exercises:[
-      {num:1,name:'Développé couché (barre)',sets:'4×8',rest:'2–3 min',tip:'Lourd. Omoplates serrées, contrôle la descente.'},
-      {num:2,name:'Développé incliné haltères',sets:'3×10',rest:'90s',tip:'Angle 20–35°, étirement complet en bas.'},
-      {num:3,name:'Écarté à la poulie',sets:'3×12',rest:'60s',tip:'Étire en arrière, serre devant 1 sec.'},
-      {num:4,name:'Dips lestés (ou machine)',sets:'3×10',rest:'90s',tip:'Buste penché vers l\'avant pour les pecs.'},
+      {num:1,name:'Développé couché (barre)',sets:'4×8',rest:'2–3 min',tip:'Lourd. Omoplates serrées, contrôle la descente.',suggested:{Jota:'60–80 kg',Jonas:'80–100 kg'}},
+      {num:2,name:'Développé incliné haltères',sets:'3×10',rest:'90s',tip:'Angle 20–35°, étirement complet en bas.',suggested:{Jota:'18–24 kg/haltère',Jonas:'24–32 kg/haltère'}},
+      {num:3,name:'Écarté à la poulie',sets:'3×12',rest:'60s',tip:'Étire en arrière, serre devant 1 sec.',suggested:{Jota:'8–14 kg/côté',Jonas:'12–18 kg/côté'}},
+      {num:4,name:'Dips lestés (ou machine)',sets:'3×10',rest:'90s',tip:'Buste penché vers l\'avant pour les pecs.',suggested:{Jota:'10–20 kg lest',Jonas:'15–25 kg lest'}},
     ]},
     {name:'BICEPS',color:'#22c55e',exercises:[
-      {num:5,name:'Curl barre',sets:'3×10',rest:'90s',tip:'Pas d\'élan, descente lente.'},
-      {num:6,name:'Curl incliné haltères',sets:'3×12',rest:'60s',tip:'Épaules en arrière, étirement max.'},
-      {num:7,name:'Curl marteau',sets:'2×12',rest:'60s',tip:'Travaille l\'avant-bras et le brachial.'},
+      {num:5,name:'Curl barre',sets:'3×10',rest:'90s',tip:'Pas d\'élan, descente lente.',suggested:{Jota:'30–40 kg',Jonas:'40–52 kg'}},
+      {num:6,name:'Curl incliné haltères',sets:'3×12',rest:'60s',tip:'Épaules en arrière, étirement max.',suggested:{Jota:'12–16 kg/haltère',Jonas:'16–22 kg/haltère'}},
+      {num:7,name:'Curl marteau',sets:'2×12',rest:'60s',tip:'Travaille l\'avant-bras et le brachial.',suggested:{Jota:'14–18 kg/haltère',Jonas:'18–24 kg/haltère'}},
     ]},
   ]},
   mercredi:{title:'DOS / TRICEPS',sections:[
     {name:'DOS',color:'#06b6d4',exercises:[
-      {num:1,name:'Tractions ou tirage vertical',sets:'4×8',rest:'2 min',tip:'Lourd. Tire avec les coudes, épaules basses.'},
-      {num:2,name:'Rowing barre',sets:'4×10',rest:'90–120s',tip:'Dos droit, serre les omoplates en haut.'},
-      {num:3,name:'Tirage horizontal serré',sets:'3×10',rest:'90s',tip:'Poitrine haute, contrôle la descente.'},
+      {num:1,name:'Tractions ou tirage vertical',sets:'4×8',rest:'2 min',tip:'Lourd. Tire avec les coudes, épaules basses.',suggested:{Jota:'poids de corps / 55–70 kg',Jonas:'poids de corps / 65–85 kg'}},
+      {num:2,name:'Rowing barre',sets:'4×10',rest:'90–120s',tip:'Dos droit, serre les omoplates en haut.',suggested:{Jota:'60–80 kg',Jonas:'80–100 kg'}},
+      {num:3,name:'Tirage horizontal serré',sets:'3×10',rest:'90s',tip:'Poitrine haute, contrôle la descente.',suggested:{Jota:'50–65 kg',Jonas:'65–80 kg'}},
     ]},
     {name:'TRICEPS',color:'#a855f7',exercises:[
-      {num:4,name:'Pushdown corde',sets:'3×12',rest:'60–90s',tip:'Coudes collés, verrouille en bas 1 sec.'},
-      {num:5,name:'Extension au-dessus tête (corde)',sets:'3×12',rest:'60–90s',tip:'Étire bien derrière la tête.'},
-      {num:6,name:'Dips triceps (machine/barres)',sets:'3×10',rest:'90s',tip:'Buste droit, coudes proches du corps.'},
+      {num:4,name:'Pushdown corde',sets:'3×12',rest:'60–90s',tip:'Coudes collés, verrouille en bas 1 sec.',suggested:{Jota:'25–35 kg',Jonas:'32–45 kg'}},
+      {num:5,name:'Extension au-dessus tête (corde)',sets:'3×12',rest:'60–90s',tip:'Étire bien derrière la tête.',suggested:{Jota:'20–28 kg',Jonas:'28–38 kg'}},
+      {num:6,name:'Dips triceps (machine/barres)',sets:'3×10',rest:'90s',tip:'Buste droit, coudes proches du corps.',suggested:{Jota:'poids de corps',Jonas:'poids de corps'}},
     ]},
   ]},
   vendredi:{title:'ÉPAULES / JAMBES',sections:[
     {name:'ÉPAULES',color:'#3b82f6',exercises:[
-      {num:1,name:'Développé militaire haltères',sets:'4×10',rest:'2 min',tip:'Gainage, ne creuse pas le dos.'},
-      {num:2,name:'Élévations latérales',sets:'3×15',rest:'60s',tip:'Léger, montée jusqu\'à l\'épaule.'},
-      {num:3,name:'Oiseau inversé (rear delt)',sets:'3×15',rest:'60s',tip:'Buste penché, pince les omoplates.'},
+      {num:1,name:'Développé militaire haltères',sets:'4×10',rest:'2 min',tip:'Gainage, ne creuse pas le dos.',suggested:{Jota:'18–24 kg/haltère',Jonas:'24–30 kg/haltère'}},
+      {num:2,name:'Élévations latérales',sets:'3×15',rest:'60s',tip:'Léger, montée jusqu\'à l\'épaule.',suggested:{Jota:'8–12 kg/haltère',Jonas:'10–16 kg/haltère'}},
+      {num:3,name:'Oiseau inversé (rear delt)',sets:'3×15',rest:'60s',tip:'Buste penché, pince les omoplates.',suggested:{Jota:'10–14 kg/haltère',Jonas:'14–20 kg/haltère'}},
     ]},
     {name:'JAMBES',color:'#eab308',exercises:[
-      {num:4,name:'Presse à cuisses',sets:'4×10',rest:'2–3 min',tip:'Lourd. Amplitude contrôlée, dos collé.'},
-      {num:5,name:'Squat guidé / Hack squat',sets:'3×10',rest:'2 min',tip:'Descente lente, pousse dans le sol.'},
-      {num:6,name:'Leg curl (ischios)',sets:'3×12',rest:'60–90s',tip:'Pause 1 sec en contraction.'},
-      {num:7,name:'Leg extension (quadris)',sets:'3×12',rest:'60–90s',tip:'Monte fort, descends lentement.'},
-      {num:8,name:'Mollets debout',sets:'4×20',rest:'45s',tip:'Pause 1 sec en haut + étirement complet.'},
+      {num:4,name:'Presse à cuisses',sets:'4×10',rest:'2–3 min',tip:'Lourd. Amplitude contrôlée, dos collé.',suggested:{Jota:'100–150 kg',Jonas:'140–200 kg'}},
+      {num:5,name:'Squat guidé / Hack squat',sets:'3×10',rest:'2 min',tip:'Descente lente, pousse dans le sol.',suggested:{Jota:'60–90 kg',Jonas:'80–120 kg'}},
+      {num:6,name:'Leg curl (ischios)',sets:'3×12',rest:'60–90s',tip:'Pause 1 sec en contraction.',suggested:{Jota:'40–55 kg',Jonas:'50–70 kg'}},
+      {num:7,name:'Leg extension (quadris)',sets:'3×12',rest:'60–90s',tip:'Monte fort, descends lentement.',suggested:{Jota:'40–55 kg',Jonas:'50–70 kg'}},
+      {num:8,name:'Mollets debout',sets:'4×20',rest:'45s',tip:'Pause 1 sec en haut + étirement complet.',suggested:{Jota:'60–80 kg',Jonas:'80–100 kg'}},
     ]},
   ]},
 };
@@ -278,7 +286,8 @@ const NUTRITION = {
 let currentDay='lundi', currentTab='training', mainTab='plan';
 let userName=null, groupCode=null;
 let allEntries={};   // { docId: {user,date,weight,kcal,protein,trained,notes} }
-let unsub=null;
+let workLogs={};     // { date: { exKey: {weight,note} } }
+let unsub=null, unsubWork=null;
 
 const LS = { name:'cut_userName', group:'cut_groupCode' };
 
@@ -351,13 +360,24 @@ function renderPlan(){
     tr.sections.forEach(sec=>{
       html+=`<div class="section-block"><div class="section-header" style="background:${sec.color}15;border:1px solid ${sec.color}30"><span class="section-name" style="color:${sec.color}">${sec.name}</span></div>`;
       sec.exercises.forEach(ex=>{
+        const today=new Date().toISOString().slice(0,10);
+        const exKey=`${currentDay}-${ex.num}`;
+        const saved=(workLogs[today]||{})[exKey]||{};
         html+=`<div class="exercise"><div class="ex-row"><div class="ex-left">
           <div class="ex-meta"><span class="ex-num" style="background:${sec.color}">${ex.num}</span><span class="ex-name">${ex.name}</span></div>
-          <div class="ex-tip">💡 ${ex.tip}</div></div>
+          <div class="ex-tip">💡 ${ex.tip}</div>
+          ${ex.suggested?(()=>{const s=ex.suggested[userName]||ex.suggested.Jota;return`<div class="ex-suggested">📊 Conseillé : ${s}</div>`;})():''}
+          <div class="ex-log">
+            <span class="ex-log-label">Poids :</span>
+            <input type="number" id="wlog-w-${exKey}" value="${saved.weight||''}" placeholder="kg" step="0.5" inputmode="decimal">
+            <span class="ex-log-label">Note :</span>
+            <input type="text" id="wlog-n-${exKey}" value="${saved.note||''}" placeholder="4×8 ✓">
+          </div></div>
           <div class="ex-right"><div class="ex-sets" style="color:${sec.color}">${ex.sets}</div><div class="ex-rest">${ex.rest}</div></div></div></div>`;
       });
       html+=`</div>`;
     });
+    html+=`<button class="save-workout-btn" id="save-workout-btn" onclick="saveWorkLog()">💾 Sauvegarder la séance</button>`;
   }
   if(currentTab==='training'&&isCardio){
     html+=`<div class="cardio-card">`;
@@ -386,6 +406,16 @@ function subscribe(){
     allEntries={};
     snap.forEach(d=> allEntries[d.id]=d.data());
     if(mainTab==='track') renderTracker();
+  }, err=>{ console.error(err); });
+  if(unsubWork) unsubWork();
+  const col2 = collection(db,'groups',groupCode,'worklogs');
+  unsubWork = onSnapshot(col2, snap=>{
+    workLogs={};
+    snap.forEach(d=>{
+      const data=d.data();
+      if(data.user===userName){ workLogs[data.date]=data.exercises||{}; }
+    });
+    if(mainTab==='plan'&&currentTab==='training') renderPlan();
   }, err=>{ console.error(err); });
 }
 
@@ -424,6 +454,28 @@ async function saveLog(){
     await setDoc(doc(db,'groups',groupCode,'entries',id),entry);
     msg('✅ Enregistré et synchronisé !','#22c55e');
   }catch(e){ console.error(e); msg('❌ Erreur de synchro — vérifie ta connexion','#ef4444'); }
+}
+
+async function saveWorkLog(){
+  if(!db||!groupCode||!userName){ alert('Connecte-toi à un groupe d\'abord.'); return; }
+  const today=new Date().toISOString().slice(0,10);
+  const tr=TRAINING[currentDay]; if(!tr) return;
+  const exercises={};
+  tr.sections.forEach(sec=>{
+    sec.exercises.forEach(ex=>{
+      const exKey=`${currentDay}-${ex.num}`;
+      const w=document.getElementById(`wlog-w-${exKey}`)?.value;
+      const n=document.getElementById(`wlog-n-${exKey}`)?.value;
+      if(w||n) exercises[exKey]={name:ex.name,weight:parseFloat(w)||null,note:n||''};
+    });
+  });
+  const id=`${userName}__${today}`;
+  try{
+    await setDoc(doc(db,'groups',groupCode,'worklogs',id),{user:userName,date:today,exercises,updatedAt:serverTimestamp()},{merge:true});
+    workLogs[today]=exercises;
+    const btn=document.getElementById('save-workout-btn');
+    if(btn){btn.textContent='✅ Séance sauvegardée !';setTimeout(()=>{btn.textContent='💾 Sauvegarder la séance';},2200);}
+  }catch(e){console.error(e);alert('Erreur de synchro');}
 }
 
 async function deleteLog(id){
@@ -523,7 +575,7 @@ function renderTracker(){
 
 // expose to window for inline onclick
 window.setMainTab=setMainTab; window.setTab=setTab; window.joinGroup=joinGroup;
-window.leaveGroup=leaveGroup; window.saveLog=saveLog; window.deleteLog=deleteLog;
+window.leaveGroup=leaveGroup; window.saveLog=saveLog; window.deleteLog=deleteLog; window.saveWorkLog=saveWorkLog;
 
 init();
 </script>
