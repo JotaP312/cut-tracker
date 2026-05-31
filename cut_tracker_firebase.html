@@ -233,12 +233,22 @@ const TRAINING = {
   ]},
 };
 
-const CARDIO = {steps:[
-  {icon:'🚴',title:'Échauffement cardio — 5 min',desc:'Vélo, rameur ou elliptique tranquille pour monter en température.'},
-  {icon:'🔥',title:'Cardio modéré — 15–20 min',desc:'Allure soutenue mais où tu peux parler. Optionnel : intervalles 20s fort / 40s léger × 10.'},
-  {icon:'🚶',title:'Marche inclinée — 30–40 min',desc:'Tapis 5–6 km/h, inclinaison 10–12%. L\'outil n°1 de la sèche.'},
-  {icon:'💧',title:'Hydratation',desc:'Bois pendant toute la séance. Vise 3L sur la journée.'},
-]};
+const CARDIO = {
+  lundi:{steps:[
+    {icon:'🔥',title:'Échauffement vélo — 5 min',desc:'Résistance légère, 70–80 rpm. Mise en température progressive, pas d\'effort.'},
+    {icon:'🚣',title:'Rameur — 4 × 4 min',desc:'Effort modéré (7/10). 1 min de récup assis entre chaque bloc. Pousse avec les jambes en premier, tire avec les bras ensuite. Dos droit.'},
+    {icon:'🚴',title:'Vélo — 15 min',desc:'Résistance modérée-haute, 80–90 rpm. Allure soutenue et constante. Tu dois pouvoir parler, mais à peine.'},
+    {icon:'🚶',title:'Marche inclinée — 35 min',desc:'Tapis 5–6 km/h, inclinaison 10–12%. Ne tiens pas les barres. L\'outil n°1 de la sèche.'},
+    {icon:'💧',title:'Hydratation',desc:'Bois régulièrement pendant toute la séance. Vise 3L sur la journée.'},
+  ]},
+  jeudi:{steps:[
+    {icon:'🔥',title:'Échauffement elliptique — 5 min',desc:'Résistance légère, bras actifs. Allure très tranquille pour monter progressivement en température.'},
+    {icon:'🛶',title:'Elliptique — 20 min',desc:'Résistance 6–8/10. Alterne : 2 min effort soutenu / 1 min allure modérée × 6. Garde le dos droit, pousse avec les bras.'},
+    {icon:'🚴',title:'Vélo — 15 min',desc:'5 × (30s sprint max / 90s récup légère), puis 5 min cool-down à faible résistance. Brûle les réserves de glycogène restantes.'},
+    {icon:'🚶',title:'Marche inclinée — 35 min',desc:'Tapis 5–6 km/h, inclinaison 10–12%. Maintient la fréquence cardiaque en zone graisseuse (60–70% FCmax).'},
+    {icon:'💧',title:'Hydratation',desc:'Bois régulièrement pendant toute la séance. Vise 3L sur la journée.'},
+  ]},
+};
 
 const NUTRITION = {
   muscu:{cal:1700,meals:[
@@ -351,7 +361,7 @@ function renderPlan(){
   }
   if(currentTab==='training'&&isCardio){
     html+=`<div class="cardio-card">`;
-    CARDIO.steps.forEach(s=>{ html+=`<div class="cardio-step"><div class="cardio-icon">${s.icon}</div><div><div class="cardio-title">${s.title}</div><div class="cardio-desc">${s.desc}</div></div></div>`; });
+    CARDIO[currentDay].steps.forEach(s=>{ html+=`<div class="cardio-step"><div class="cardio-icon">${s.icon}</div><div><div class="cardio-title">${s.title}</div><div class="cardio-desc">${s.desc}</div></div></div>`; });
     html+=`</div>`;
   }
   if(currentTab==='nutrition'||type==='repos'){
